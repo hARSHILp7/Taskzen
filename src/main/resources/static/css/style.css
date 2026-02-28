@@ -49,3 +49,9 @@ button:hover {
   background-color: #d6d6d6;
   color: #3c3c3c;
 }
+
+p {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+}
