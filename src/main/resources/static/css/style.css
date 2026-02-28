@@ -1,0 +1,21 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background-color: #f5f0e8;
+  color: #1a1a1a;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: normal;
+  letter-spacing: 0.05em;
+}
