@@ -1,21 +1,51 @@
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html, body {
-  height: 100%;
+html {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 body {
-  font-family: Georgia, 'Times New Roman', serif;
-  background-color: #f5f0e8;
-  color: #1a1a1a;
+  background-color: #3c3c3c;
+  color: #d6d6d6
 }
 
-h1 {
-  font-size: 3rem;
-  font-weight: normal;
-  letter-spacing: 0.05em;
+div {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+}
+
+input {
+  padding: 20px;
+  font-size: 20px;
+  background-color: transparent;
+  color: #3c3c3c;
+  border: 2px solid #d6d6d6;
+  border-radius: 4px;
+}
+
+input::placeholder {
+  color: #d6d6d6;
+  opacity: 0.4;
+}
+
+input:focus {
+  border: 2px solid #d6d6d6;
+  background-color: #d6d6d6;
+}
+
+button {
+  padding: 20px;
+  font-size: 20px;
+  background-color: transparent;
+  color: #d6d6d6;
+  border: 2px solid #d6d6d6;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d6d6d6;
+  color: #3c3c3c;
 }
