@@ -1,3 +1,5 @@
+import './style.css'
+
 const submitBtn = document.getElementById('submit');
 const userInput = document.getElementById('message');
 const display = document.getElementById('display');
