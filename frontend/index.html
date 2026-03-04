@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Todo App</title>
 </head>
-<body>
-  <div id="form">
-    <input type="text" id="message" placeholder="Type a message here..." />
-    <button id="submit">Submit</button>
+<body class="bg-[#14140F] text-[#F26800] flex justify-center items-center h-screen">
+
+  <div id="form" class="font-['Segoe_UI',Tahoma,Geneva,Verdana,sans-serif] text-4xl font-normal flex gap-4">
+    <div class="relative">
+      <input
+        type="text"
+        id="message"
+        placeholder=" "
+        autocomplete="off"
+        class="px-5 pt-6 pb-2 text-xl bg-transparent border-2 border-[#F26800] rounded cursor-text
+              focus:outline-none peer w-80"
+      />
+      <label
+        for="message"
+        id="message-label"
+        class="absolute left-5 top-4 text-[#F26800] text-xl cursor-text
+              transition-all duration-300
+              peer-focus:top-1 peer-focus:text-sm
+              peer-hover:top-1 peer-hover:text-sm
+              peer-[:not(:placeholder-shown)]:top-1
+              peer-[:not(:placeholder-shown)]:text-sm"
+      >
+        Your message
+      </label>
+    </div>
+    <button
+      id="submit"
+      class="px-5 text-xl bg-transparent text-[#F26800] border-2 border-[#F26800] rounded cursor-pointer
+             hover:text-[#14140F] self-stretch"
+    >
+      Submit
+    </button>
   </div>
-  <p id="display"></p>
+
+  <p id="display" class="font-['Segoe_UI',Tahoma,Geneva,Verdana,sans-serif] text-4xl font-normal"></p>
+
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>
