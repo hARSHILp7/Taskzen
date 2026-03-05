@@ -4,12 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Todo App</title>
-  <link rel="stylesheet" href="/css/style.css" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="hero">
-    <h1>Hello World</h1>
+  <div id="app-container" class="bg-[#14140F] text-[#FFFFFF] h-screen font-['Inter']">
+    <!-- Today's Info -->
+    <div id="today-info"
+      class="flex flex-col justify-center items-center w-screen pt-10 pb-16">
+      <div id="day"
+        class="text-[#FFFFFF] text-[64px] font-bold h-18">
+        SATURDAY</div>
+      <div id="date-time"
+        class="text-[#F26800] text-[28px]">
+        July 31st - 11:59 PM</div>
+    </div>
+
+    <!-- Add Task -->
+    <div id="add-task"
+      class="flex justify-center items-center w-screen gap-8">
+      <input type="text"
+        id="add-task-input" placeholder=" "  autocomplete="off"
+        class="w-1/4 p-5 border-2 border-[#F26800] border-solid text-[#F26800] text-[20px] font-medium bg-transparent rounded-md transition duration-300
+          focus:border-[#F26800] focus:text-[#14140F] focus:bg-[#F26800] focus:outline-none" />
+      <button id="add-task-btn"
+        class="border-2 border-[#F26800] border-solid pt-4 pb-4 pl-6 pr-6 text-[24px] text-[#F26800] cursor-pointer rounded-md
+          hover:bg-[#F26800] hover:text-[#14140F] transition duration-300">
+        Add Task</button>
+    </div>
+
+    <!-- Task List -->
+    <div id="task-list"
+      class="">
+
+    </div>
   </div>
-  <script src="/js/app.js"></script>
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
