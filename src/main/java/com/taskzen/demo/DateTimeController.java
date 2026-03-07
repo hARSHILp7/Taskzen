@@ -1,14 +1,14 @@
 package com.taskzen.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
@@ -23,7 +23,7 @@ public class DateTimeController {
         String month = now.format(DateTimeFormatter.ofPattern("MMMM"));
         int dayOfMonth = now.getDayOfMonth();
         String suffix = getDaySuffix(dayOfMonth);
-        String time = now.format(DateTimeFormatter.ofPattern("hh:mm a"));
+        String time = now.format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
 
         String dateTime = month + " " + dayOfMonth + suffix + " - " + time;
 

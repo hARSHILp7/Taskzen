@@ -1,3 +1,4 @@
+import { todoListData } from './mock_data';
 import './style.css'
 
 const add_task_input = document.getElementById('add-task-input')
@@ -19,6 +20,28 @@ async function loadDateTime() {
   }
 }
 
-loadDateTime();
+async function loadListData() {
+  try {
+    // const response = await fetch('/api/todos');
+    // const data = await response.json();
 
-setInterval(loadDateTime, 30000);
+    const data = todoListData
+
+    const todoListElement = document.getElementById('task-list-demo');
+    todoListElement.innerHTML = '';
+
+    data.forEach(todo => {
+      const listItem = document.createElement('li');
+      listItem.textContent = `${todo.title} - ${todo.completed ? 'Completed' : 'Pending'}`;
+      todoListElement.appendChild(listItem);
+    });
+  }
+  catch (error) {
+    console.error('Failed to load todo list data:', error);
+  }
+}
+
+loadDateTime();
+loadListData();
+
+setInterval(loadDateTime, 1000);
