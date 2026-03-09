@@ -23,7 +23,7 @@ public class DateTimeController {
         String month = now.format(DateTimeFormatter.ofPattern("MMMM"));
         int dayOfMonth = now.getDayOfMonth();
         String suffix = getDaySuffix(dayOfMonth);
-        String time = now.format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
+        String time = now.format(DateTimeFormatter.ofPattern("hh:mm a"));
 
         String dateTime = month + " " + dayOfMonth + suffix + " - " + time;
 
