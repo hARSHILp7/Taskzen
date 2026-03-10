@@ -4,21 +4,25 @@ import './style.css'
 const addTaskInput = document.getElementById('add-task-input');
 const addTaskBtn = document.getElementById('add-task-btn');
 
+const markAllCompleteBtn = document.getElementById('mark-all-complete');
+const deleteAllBtn = document.getElementById('delete-all');
+
+const sortTasksBtn = document.getElementById('sort-tasks');
+const sortDropdown = document.getElementById('sort-dropdown');
+
 // Focus on the add task input after 3 seconds of page load
 setTimeout(() => {
   addTaskInput.focus();
 }, 3000);
 
-addTaskBtn.addEventListener('click', async () => {
-  // const title = addTaskInput.value.trim();
-  // if(!title) return;
-  // todoListData.push({
-  //   title: title,
-  //   completed: false,
-  // });
-  // addTaskInput.value = '';
-  // loadListData();
+loadDateTime();
+setInterval(loadDateTime, 1000);
 
+const savedSortBy = localStorage.getItem('sortBy') || 'newest';
+updateActiveSortOption(savedSortBy);
+loadListData(savedSortBy);
+
+addTaskBtn.addEventListener('click', async () => {
   const title = addTaskInput.value.trim();
   if (!title) return;
 
@@ -34,6 +38,12 @@ addTaskBtn.addEventListener('click', async () => {
   }
 });
 
+addTaskInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    addTaskBtn.click();
+  }
+});
+
 async function loadDateTime() {
   try {
     const response = await fetch('/api/datetime');
@@ -46,12 +56,13 @@ async function loadDateTime() {
   }
 }
 
-async function loadListData() {
+async function loadListData(sortBy = localStorage.getItem('sortBy') || 'newest') {
   try {
-    const response = await fetch('/api/todos');
+    const response = await fetch(`/api/todos?sort=${sortBy}`);
     const data = await response.json();
 
-    // const data = todoListData;
+    updateFeatureBtns(data);
+
     const todoListElement = document.getElementById('task-list-ordered');
     todoListElement.innerHTML = '';
 
@@ -80,8 +91,6 @@ async function loadListData() {
         if (response.ok) {
           loadListData();
         }
-        // todo.completed = !todo.completed;
-        
         checkbox.innerHTML = todo.completed 
         ? '<i class="fas fa-check-square"></i>' 
         : '<i class="fa-regular fa-square"></i>';
@@ -100,8 +109,6 @@ async function loadListData() {
         if (response.ok) {
           loadListData();
         }
-        // todoListData.splice(index, 1);
-        // loadListData();
       });
     });
   }
@@ -110,7 +117,63 @@ async function loadListData() {
   }
 }
 
-loadDateTime();
-setInterval(loadDateTime, 1000);
+markAllCompleteBtn.addEventListener('click', async () => {
+  const response = await fetch('/api/todos/complete-all', { method: 'PATCH' });
+  if (response.ok) {
+    loadListData();
+  }
+});
 
-loadListData();
+deleteAllBtn.addEventListener('click', async () => {
+  const response = await fetch('/api/todos/delete-all', { method: 'DELETE' });
+  if (response.ok) {
+    loadListData();
+  }
+});
+
+function updateFeatureBtns(data) {
+  const markAllCompleteBtn = document.getElementById('mark-all-complete');
+  const deleteAllBtn = document.getElementById('delete-all');
+
+  const allCompleted = (data.length > 0 && data.every(todo => todo.completed)) || data.length === 0;
+  if(allCompleted) {
+    markAllCompleteBtn.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+  } else {
+    markAllCompleteBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+  }
+
+  if(data.length === 0) {
+    deleteAllBtn.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+  } else {
+    deleteAllBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+  }
+}
+
+sortTasksBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  sortDropdown.classList.toggle('hidden');
+});
+
+document.addEventListener('click', () => {
+  sortDropdown.classList.add('hidden');
+});
+
+document.querySelectorAll('.sort-option').forEach(option => {
+  option.addEventListener('click', (e) => {
+    const sortBy = e.target.dataset.sort;
+    localStorage.setItem('sortBy', sortBy);
+    sortDropdown.classList.add('hidden');
+    updateActiveSortOption(sortBy);
+    loadListData(sortBy);
+  });
+});
+
+function updateActiveSortOption(sortBy) {
+  document.querySelectorAll('.sort-option').forEach(option => {
+    if(option.dataset.sort == sortBy) {
+      option.classList.add('sort-option-active');
+    } else {
+      option.classList.remove('sort-option-active');
+    }
+  });
+}

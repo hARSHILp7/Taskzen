@@ -40,6 +40,18 @@
 
     <!-- Task List -->
     <div id="task-list" class="task-list">
+      <div id="task-list-feature" class="task-list-feature">
+        <button id="mark-all-complete" class="mark-all-complete">Mark all complete</button>
+        <button id="delete-all" class="delete-all">Delete all</button>
+        <div class="relative">
+          <button id="sort-tasks" class="sort-tasks">Sort by</button>
+          <div id="sort-dropdown" class="hidden absolute right-0 mt-2 border-2 border-[#F26800] border-solid rounded-md bg-[#14140F] z-10">
+            <button class="sort-option block w-full text-left px-6 py-3 text-[#F26800] hover:bg-[#F26800] hover:text-[#14140F] transition duration-200" data-sort="newest">Newest</button>
+            <button class="sort-option block w-full text-left px-6 py-3 text-[#F26800] hover:bg-[#F26800] hover:text-[#14140F] transition duration-200" data-sort="oldest">Oldest</button>
+            <button class="sort-option block w-full text-left px-6 py-3 text-[#F26800] hover:bg-[#F26800] hover:text-[#14140F] transition duration-200" data-sort="pending">Pending</button>
+          </div>
+        </div>
+      </div>
       <ol id="task-list-ordered" class="task-list-ordered">
       </ol>
     </div>
@@ -47,13 +59,3 @@
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>
-
-
-
-<!-- <ol class="task-list-ordered">
-  <li class="task-list-item">
-    <div class="task-list-item-checkbox"><i class="fa-regular fa-square"></i></div>
-    <div class="task-list-item-title">Sample Task 1</div>
-    <div class="task-list-item-delete"><i class="fa-regular fa-trash-can"></i></div>
-  </li>
-</ol> -->
