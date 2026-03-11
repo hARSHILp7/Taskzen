@@ -25,7 +25,20 @@
 }
 
 .task-list-ordered {
-    @apply flex flex-col text-[#F26800] gap-y-0.5;
+    @apply flex flex-col text-[#F26800] gap-y-0.5 max-h-[50vh] overflow-y-auto;
+}
+
+.task-list-ordered::-webkit-scrollbar {
+  width: 4px;
+}
+
+.task-list-ordered::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.task-list-ordered::-webkit-scrollbar-thumb {
+  background-color: #F26800;
+  border-radius: 999px;
 }
 
 .task-list-item {
