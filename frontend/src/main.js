@@ -9,6 +9,7 @@ const deleteAllBtn = document.getElementById('delete-all');
 
 const sortTasksBtn = document.getElementById('sort-tasks');
 const sortDropdown = document.getElementById('sort-dropdown');
+const sortingArrow = document.getElementById('sorting-arrow');
 
 // Focus on the add task input after 3 seconds of page load
 setTimeout(() => {
@@ -91,9 +92,7 @@ async function loadListData(sortBy = localStorage.getItem('sortBy') || 'newest')
         if (response.ok) {
           loadListData();
         }
-        checkbox.innerHTML = todo.completed 
-        ? '<i class="fas fa-check-square"></i>' 
-        : '<i class="fa-regular fa-square"></i>';
+        checkbox.innerHTML = todo.completed ? '<i class="fas fa-check-square"></i>' : '<i class="fa-regular fa-square"></i>';
 
         title.classList.toggle('line-through');
         title.classList.toggle('opacity-50');
