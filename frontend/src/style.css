@@ -1,1 +1,78 @@
 @import "tailwindcss";
+
+.app-container {
+    @apply bg-[#14140F] text-[#FFFFFF] h-screen w-screen font-['Inter'];
+}
+
+.today-info {
+    @apply flex flex-col justify-center items-center w-screen pt-10 pb-16;
+}
+
+.today-day {
+    @apply text-[#FFFFFF] text-[64px] font-bold h-18;
+}
+
+.today-date-time {
+    @apply text-[#F26800] text-[28px];
+}
+
+.add-task {
+    @apply flex flex-col md:flex-row justify-center items-center w-screen gap-4 px-6 md:px-0;
+}
+
+.task-list {
+    @apply mt-16 mx-6 md:mx-auto rounded-md w-full md:w-1/3 text-[18px] font-light;
+}
+
+.task-list-ordered {
+    @apply flex flex-col text-[#F26800] gap-y-0.5 max-h-[52vh] overflow-y-auto;
+}
+
+.task-list-ordered::-webkit-scrollbar {
+  width: 4px;
+}
+
+.task-list-ordered::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.task-list-ordered::-webkit-scrollbar-thumb {
+  background-color: #F26800;
+  border-radius: 999px;
+}
+
+.task-list-item {
+    @apply py-4 px-6 flex flex-row gap-5 justify-evenly;
+}
+
+.task-list-feature {
+    @apply flex flex-row justify-center items-center w-full gap-4 mb-6;
+}
+
+.mark-all-complete {
+    @apply w-full md:w-auto border-2 border-[#F26800] border-solid pt-4 pb-4 pl-6 pr-6 text-[18px] text-[#F26800] cursor-pointer rounded-md hover:text-[#14140F] hover:bg-[#F26800] transition duration-300;
+}
+
+.delete-all {
+    @apply w-full md:w-auto border-2 border-[#F26800] border-solid pt-4 pb-4 pl-6 pr-6 text-[18px] text-[#F26800] cursor-pointer rounded-md hover:text-[#14140F] hover:bg-[#F26800] transition duration-300;
+}
+
+.sort-tasks {
+    @apply w-full md:w-auto justify-center items-center border-2 border-[#F26800] border-solid py-4 px-6 text-[18px] text-[#F26800] cursor-pointer rounded-md hover:text-[#14140F] hover:bg-[#F26800] transition duration-300;
+}
+
+.sort-option-active {
+  @apply bg-[#F26800] text-[#14140F];
+}
+
+.task-list-item-title {
+    @apply text-[#F26800] text-[22px] cursor-pointer w-1/1;
+}
+
+.task-list-item-checkbox {
+    @apply cursor-pointer text-[26px];
+}
+
+.task-list-item-delete {
+    @apply cursor-pointer text-[22px];
+}
