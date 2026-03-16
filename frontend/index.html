@@ -23,17 +23,17 @@
     <div id="add-task" class="add-task">
       <div class="relative w-full md:w-1/4">
         <input type="text" id="add-task-input" placeholder=" " autocomplete="off" maxlength="40" 
-        class="w-full pt-7 pb-3 px-5 text-[#F26800] text-[20px] border-2 border-solid border-[#F26800] 
+        class="w-full pt-7 pb-3 px-5 text-orange text-[20px] border-2 border-solid border-orange 
         bg-transparent font-medium rounded-md transition-all duration-300 peer focus:outline-none"/>
         <label for="add-task-input"
-        class="absolute left-5 top-1/2 -translate-y-1/2 text-[#F26800] text-[20px] cursor-text transition-all duration-300 
+        class="absolute left-5 top-1/2 -translate-y-1/2 text-orange text-[20px] cursor-text transition-all duration-300 
         peer-focus:top-1 peer-focus:translate-y-0 peer-focus:text-xs peer-hover:top-1 peer-hover:translate-y-0 
         peer-hover:text-xs peer-[:not(:placeholder-shown)]:top-1 peer-[:not(:placeholder-shown)]:translate-y-0 
         peer-[:not(:placeholder-shown)]:text-xs">
           Enter task here
         </label>
       </div>
-      <button id="add-task-btn" class="w-full md:w-auto border-2 border-[#F26800] border-solid pt-4 pb-4 pl-6 pr-6 text-[24px] text-[#F26800] cursor-pointer rounded-md hover:text-[#14140F] hover:bg-[#F26800] transition duration-300">
+      <button id="add-task-btn" class="w-full md:w-auto border-2 border-orange border-solid pt-4 pb-4 pl-6 pr-6 text-[24px] text-orange cursor-pointer rounded-md hover:text-black hover:bg-orange transition duration-300">
         Add Task
       </button>
     </div>
@@ -44,15 +44,19 @@
         <button id="mark-all-complete" class="mark-all-complete">Mark all complete</button>
         <button id="delete-all" class="delete-all">Delete all</button>
         <div class="relative">
-          <button id="sort-tasks" class="sort-tasks">
+          <!-- <button id="sort-tasks" class="sort-tasks">
             Sort by
-            <!-- <i id="sorting-arrow" class="fa-solid fa-angle-down ml-0.5 text-[12px] text-[#F26800] transition duration-500"></i> -->
           </button>
-          <div id="sort-dropdown" class="hidden absolute right-0 mt-2 border-2 border-[#F26800] border-solid rounded-md bg-[#14140F] z-10">
-            <button class="sort-option block w-full text-left px-6 py-3 text-[#F26800] cursor-pointer hover:bg-[#F26800] hover:text-[#14140F] transition duration-200" data-sort="newest">Newest</button>
-            <button class="sort-option block w-full text-left px-6 py-3 text-[#F26800] cursor-pointer hover:bg-[#F26800] hover:text-[#14140F] transition duration-200" data-sort="oldest">Oldest</button>
-            <button class="sort-option block w-full text-left px-6 py-3 text-[#F26800] cursor-pointer hover:bg-[#F26800] hover:text-[#14140F] transition duration-200" data-sort="pending">Pending</button>
-          </div>
+          <div id="sort-dropdown" class="hidden absolute right-0 mt-2 border-2 border-orange border-solid rounded-md bg-black z-10">
+            <button class="sort-option block w-full text-left px-6 py-3 text-orange cursor-pointer hover:bg-orange hover:text-black transition duration-200" data-sort="newest">Newest</button>
+            <button class="sort-option block w-full text-left px-6 py-3 text-orange cursor-pointer hover:bg-orange hover:text-black transition duration-200" data-sort="oldest">Oldest</button>
+            <button class="sort-option block w-full text-left px-6 py-3 text-orange cursor-pointer hover:bg-orange hover:text-black transition duration-200" data-sort="pending">Pending</button>
+          </div> -->
+          <select id="sort-tasks" class="sort-tasks">
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="pending">Pending</option>
+          </select>
         </div>
       </div>
       <ol id="task-list-ordered" class="task-list-ordered">

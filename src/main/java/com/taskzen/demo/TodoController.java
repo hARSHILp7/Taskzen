@@ -16,8 +16,8 @@ public class TodoController {
     // Get all tasks according to the Sorting
     @GetMapping
     public List<Todo> getAllTodos(@RequestParam(defaultValue = "newest") String sort) {
-        if(sort.equals("oldest")) return todoRepository.findAllByOrderByCreatedAtAsc();
-        if(sort.equals("pending")) return todoRepository.findAllByOrderByCompletedAscCreatedAtDesc();
+        if (sort.equals("oldest")) return todoRepository.findAllByOrderByCreatedAtAsc();
+        if (sort.equals("pending")) return todoRepository.findAllByOrderByCompletedAscCreatedAtDesc();
         return todoRepository.findAllByOrderByCreatedAtDesc();
     }
 
@@ -49,7 +49,7 @@ public class TodoController {
 
     // Mark all tasks as complete
     @PatchMapping("/complete-all")
-    public ResponseEntity<Todo> completeAll() {
+    public ResponseEntity<Void> completeAll() {
         List<Todo> todos = todoRepository.findAll();
         todos.forEach(todo -> todo.setCompleted(true));
         todoRepository.saveAll(todos);

@@ -1,7 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+    --color-black: #14140F;
+    --color-white: #FFFFFF;
+    --color-orange: #F26800;
+}
+
 .app-container {
-    @apply bg-[#14140F] text-[#FFFFFF] h-screen w-screen font-['Inter'];
+    @apply bg-black text-white h-screen w-screen font-['Inter'];
 }
 
 .today-info {
@@ -9,11 +15,11 @@
 }
 
 .today-day {
-    @apply text-[#FFFFFF] text-[64px] font-bold h-18;
+    @apply text-white text-[64px] font-bold h-18;
 }
 
 .today-date-time {
-    @apply text-[#F26800] text-[28px];
+    @apply text-orange text-[28px];
 }
 
 .add-task {
@@ -25,7 +31,7 @@
 }
 
 .task-list-ordered {
-    @apply flex flex-col text-[#F26800] gap-y-0.5 max-h-[52vh] overflow-y-auto;
+    @apply flex flex-col text-orange gap-y-0.5 max-h-[52vh] overflow-y-auto;
 }
 
 .task-list-ordered::-webkit-scrollbar {
@@ -37,7 +43,7 @@
 }
 
 .task-list-ordered::-webkit-scrollbar-thumb {
-  background-color: #F26800;
+  background-color: var(--color-orange);
   border-radius: 999px;
 }
 
@@ -50,23 +56,27 @@
 }
 
 .mark-all-complete {
-    @apply w-full md:w-auto border-2 border-[#F26800] border-solid pt-4 pb-4 pl-6 pr-6 text-[18px] text-[#F26800] cursor-pointer rounded-md hover:text-[#14140F] hover:bg-[#F26800] transition duration-300;
+    @apply w-full md:w-auto border-2 border-orange border-solid py-4 px-6 text-[18px] text-orange cursor-pointer rounded-md hover:text-black hover:bg-orange transition duration-300;
 }
 
 .delete-all {
-    @apply w-full md:w-auto border-2 border-[#F26800] border-solid pt-4 pb-4 pl-6 pr-6 text-[18px] text-[#F26800] cursor-pointer rounded-md hover:text-[#14140F] hover:bg-[#F26800] transition duration-300;
+    @apply w-full md:w-auto border-2 border-orange border-solid py-4 px-6 text-[18px] text-orange cursor-pointer rounded-md hover:text-black hover:bg-orange transition duration-300;
 }
 
-.sort-tasks {
-    @apply w-full md:w-auto justify-center items-center border-2 border-[#F26800] border-solid py-4 px-6 text-[18px] text-[#F26800] cursor-pointer rounded-md hover:text-[#14140F] hover:bg-[#F26800] transition duration-300;
+/* .sort-tasks {
+    @apply w-full md:w-auto justify-center items-center border-2 border-orange border-solid py-4 px-6 text-[18px] text-orange cursor-pointer rounded-md hover:text-black hover:bg-orange transition duration-300;
 }
 
 .sort-option-active {
-  @apply bg-[#F26800] text-[#14140F];
+  @apply bg-orange text-black;
+} */
+
+.sort-tasks {
+  @apply w-full md:w-auto border-2 border-orange border-solid py-4 px-6 text-[18px] text-orange cursor-pointer rounded-md bg-black transition duration-300 hover:text-black hover:bg-orange;
 }
 
 .task-list-item-title {
-    @apply text-[#F26800] text-[22px] cursor-pointer w-1/1;
+    @apply text-orange text-[22px] cursor-pointer w-full;
 }
 
 .task-list-item-checkbox {

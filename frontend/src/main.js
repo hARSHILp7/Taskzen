@@ -1,26 +1,32 @@
-import { todoListData } from './mock_data';
-import './style.css'
+import './style.css';
+
+const TIME_DELAY_GLOBAL = 3000;
+const TIME_DELAY_FOR_DATE_AND_TIME = 1000;
 
 const addTaskInput = document.getElementById('add-task-input');
 const addTaskBtn = document.getElementById('add-task-btn');
 
+const todoListElement = document.getElementById('task-list-ordered');
+
 const markAllCompleteBtn = document.getElementById('mark-all-complete');
 const deleteAllBtn = document.getElementById('delete-all');
 
-const sortTasksBtn = document.getElementById('sort-tasks');
-const sortDropdown = document.getElementById('sort-dropdown');
-const sortingArrow = document.getElementById('sorting-arrow');
+// const sortTasksBtn = document.getElementById('sort-tasks');
+// const sortDropdown = document.getElementById('sort-dropdown');
+
+const sortSelect = document.getElementById('sort-tasks');
 
 // Focus on the add task input after 3 seconds of page load
 setTimeout(() => {
   addTaskInput.focus();
-}, 3000);
+}, TIME_DELAY_GLOBAL);
 
 loadDateTime();
-setInterval(loadDateTime, 1000);
+setInterval(loadDateTime, TIME_DELAY_FOR_DATE_AND_TIME);
 
 const savedSortBy = localStorage.getItem('sortBy') || 'newest';
-updateActiveSortOption(savedSortBy);
+sortSelect.value = savedSortBy;
+// updateActiveSortOption(savedSortBy);
 loadListData(savedSortBy);
 
 addTaskBtn.addEventListener('click', async () => {
@@ -38,6 +44,22 @@ addTaskBtn.addEventListener('click', async () => {
     loadListData();
   }
 });
+
+// async function addTask() {
+//   const title = addTaskInput.value.trim();
+//   if (!title) return;
+
+//   const response = await fetch('/api/todos', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({ title, completed: false })
+//   });
+
+//   if (response.ok) {
+//     addTaskInput.value = '';
+//     loadListData();
+//   }
+// }
 
 addTaskInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
@@ -64,7 +86,6 @@ async function loadListData(sortBy = localStorage.getItem('sortBy') || 'newest')
 
     updateFeatureBtns(data);
 
-    const todoListElement = document.getElementById('task-list-ordered');
     todoListElement.innerHTML = '';
 
     data.forEach((todo, index) => {
@@ -72,14 +93,14 @@ async function loadListData(sortBy = localStorage.getItem('sortBy') || 'newest')
       todoListElement.appendChild(listItem);
       listItem.classList.add('task-list-item');
 
-      //Title
+      // Title
       const title = document.createElement('span');
       title.textContent = todo.title;
       listItem.appendChild(title);
       title.className = `${todo.completed ? 'line-through opacity-50' : ''}`;
       title.classList.add('task-list-item-title');
 
-      //Checkbox
+      // Checkbox
       const checkbox = document.createElement('button');
       checkbox.innerHTML = todo.completed
       ? '<i class="fas fa-check-square"></i>' 
@@ -98,7 +119,7 @@ async function loadListData(sortBy = localStorage.getItem('sortBy') || 'newest')
         title.classList.toggle('opacity-50');
       });
 
-      //Delete
+      // Delete
       const deleteBtn = document.createElement('button');
       deleteBtn.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
       listItem.appendChild(deleteBtn);
@@ -123,6 +144,13 @@ markAllCompleteBtn.addEventListener('click', async () => {
   }
 });
 
+// async function markAllComplete() {
+//   const response = await fetch('/api/todos/complete-all', { method: 'PATCH' });
+//   if (response.ok) {
+//     loadListData();
+//   }
+// }
+
 deleteAllBtn.addEventListener('click', async () => {
   const response = await fetch('/api/todos/delete-all', { method: 'DELETE' });
   if (response.ok) {
@@ -130,49 +158,59 @@ deleteAllBtn.addEventListener('click', async () => {
   }
 });
 
-function updateFeatureBtns(data) {
-  const markAllCompleteBtn = document.getElementById('mark-all-complete');
-  const deleteAllBtn = document.getElementById('delete-all');
+// async function deleteAll() {
+//   const response = await fetch('/api/todos/delete-all', { method: 'DELETE' });
+//   if (response.ok) {
+//     loadListData();
+//   }
+// }
 
+function updateFeatureBtns(data) {
   const allCompleted = (data.length > 0 && data.every(todo => todo.completed)) || data.length === 0;
-  if(allCompleted) {
+  if (allCompleted) {
     markAllCompleteBtn.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
   } else {
     markAllCompleteBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
   }
 
-  if(data.length === 0) {
+  if (data.length === 0) {
     deleteAllBtn.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
   } else {
     deleteAllBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
   }
 }
 
-sortTasksBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  sortDropdown.classList.toggle('hidden');
-});
+// sortTasksBtn.addEventListener('click', (e) => {
+//   e.stopPropagation();
+//   sortDropdown.classList.toggle('hidden');
+// });
 
-document.addEventListener('click', () => {
-  sortDropdown.classList.add('hidden');
-});
+// document.addEventListener('click', () => {
+//   sortDropdown.classList.add('hidden');
+// });
 
-document.querySelectorAll('.sort-option').forEach(option => {
-  option.addEventListener('click', (e) => {
-    const sortBy = e.target.dataset.sort;
-    localStorage.setItem('sortBy', sortBy);
-    sortDropdown.classList.add('hidden');
-    updateActiveSortOption(sortBy);
-    loadListData(sortBy);
-  });
-});
+// document.querySelectorAll('.sort-option').forEach(option => {
+//   option.addEventListener('click', (e) => {
+//     const sortBy = e.target.dataset.sort;
+//     localStorage.setItem('sortBy', sortBy);
+//     sortDropdown.classList.add('hidden');
+//     updateActiveSortOption(sortBy);
+//     loadListData(sortBy);
+//   });
+// });
 
-function updateActiveSortOption(sortBy) {
-  document.querySelectorAll('.sort-option').forEach(option => {
-    if(option.dataset.sort == sortBy) {
-      option.classList.add('sort-option-active');
-    } else {
-      option.classList.remove('sort-option-active');
-    }
-  });
-}
+// function updateActiveSortOption(sortBy) {
+//   document.querySelectorAll('.sort-option').forEach(option => {
+//     if (option.dataset.sort === sortBy) {
+//       option.classList.add('sort-option-active');
+//     } else {
+//       option.classList.remove('sort-option-active');
+//     }
+//   });
+// }
+
+sortSelect.addEventListener('change', () => {
+  const sortBy = sortSelect.value;
+  localStorage.setItem('sortBy', sortBy);
+  loadListData(sortBy);
+});
