@@ -1,4 +1,4 @@
-import './style.css';
+// import './style.css';
 
 const TIME_DELAY_GLOBAL = 3000;
 const TIME_DELAY_FOR_DATE_AND_TIME = 1000;
@@ -11,9 +11,6 @@ const todoListElement = document.getElementById('task-list-ordered');
 const markAllCompleteBtn = document.getElementById('mark-all-complete');
 const deleteAllBtn = document.getElementById('delete-all');
 
-// const sortTasksBtn = document.getElementById('sort-tasks');
-// const sortDropdown = document.getElementById('sort-dropdown');
-
 const sortSelect = document.getElementById('sort-tasks');
 
 // Focus on the add task input after 3 seconds of page load
@@ -25,11 +22,10 @@ loadDateTime();
 setInterval(loadDateTime, TIME_DELAY_FOR_DATE_AND_TIME);
 
 const savedSortBy = localStorage.getItem('sortBy') || 'newest';
-sortSelect.value = savedSortBy;
-// updateActiveSortOption(savedSortBy);
+updateSortOptions(savedSortBy);
 loadListData(savedSortBy);
 
-addTaskBtn.addEventListener('click', async () => {
+async function addTask() {
   const title = addTaskInput.value.trim();
   if (!title) return;
 
@@ -43,23 +39,7 @@ addTaskBtn.addEventListener('click', async () => {
     addTaskInput.value = '';
     loadListData();
   }
-});
-
-// async function addTask() {
-//   const title = addTaskInput.value.trim();
-//   if (!title) return;
-
-//   const response = await fetch('/api/todos', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ title, completed: false })
-//   });
-
-//   if (response.ok) {
-//     addTaskInput.value = '';
-//     loadListData();
-//   }
-// }
+}
 
 addTaskInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
@@ -96,9 +76,68 @@ async function loadListData(sortBy = localStorage.getItem('sortBy') || 'newest')
       // Title
       const title = document.createElement('span');
       title.textContent = todo.title;
+      title.className = `task-list-item-title ${todo.completed ? 'line-through opacity-50 cursor-default' : 'cursor-pointer'}`;
       listItem.appendChild(title);
-      title.className = `${todo.completed ? 'line-through opacity-50' : ''}`;
-      title.classList.add('task-list-item-title');
+
+      // Click on title to edit
+      title.addEventListener('click', () => {
+        if (todo.completed) return;
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = todo.title;
+        input.maxLength = 40;
+        input.className = 'task-list-item-title-input';
+
+        listItem.replaceChild(input, title);
+        input.focus();
+        input.select();
+
+        let isSaving = false;
+
+        // Save on enter
+        input.addEventListener('keydown', async (e) => {
+          if (e.key === 'Enter') {
+            isSaving = true;
+            await saveTitle(input, title, todo);
+          }
+
+          // Cancel on escape
+          if (e.key === 'Escape') {
+            isSaving = true;
+            listItem.replaceChild(title, input);
+          }
+        });
+
+        // Save on blur (clicking outside)
+        input.addEventListener('blur', async () => {
+          if(isSaving) return;
+          await saveTitle(input, title, todo);
+        });
+      });
+
+      async function saveTitle(input, title, todo) {
+        const newTitle = input.value.trim();
+
+        // If empty or unchanged, revert
+        if ( !newTitle || newTitle === todo.title ) {
+          input.parentElement.replaceChild(title, input);
+          return;
+        }
+
+        const response = await fetch(`/api/todos/${todo.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: newTitle })
+        });
+
+        if (response.ok) {
+          todo.title = newTitle;
+          title.textContent = newTitle;
+        }
+
+        input.parentElement.replaceChild(title, input);
+      }
 
       // Checkbox
       const checkbox = document.createElement('button');
@@ -137,33 +176,19 @@ async function loadListData(sortBy = localStorage.getItem('sortBy') || 'newest')
   }
 }
 
-markAllCompleteBtn.addEventListener('click', async () => {
+async function markAllComplete() {
   const response = await fetch('/api/todos/complete-all', { method: 'PATCH' });
   if (response.ok) {
     loadListData();
   }
-});
+}
 
-// async function markAllComplete() {
-//   const response = await fetch('/api/todos/complete-all', { method: 'PATCH' });
-//   if (response.ok) {
-//     loadListData();
-//   }
-// }
-
-deleteAllBtn.addEventListener('click', async () => {
+async function deleteAll() {
   const response = await fetch('/api/todos/delete-all', { method: 'DELETE' });
   if (response.ok) {
     loadListData();
   }
-});
-
-// async function deleteAll() {
-//   const response = await fetch('/api/todos/delete-all', { method: 'DELETE' });
-//   if (response.ok) {
-//     loadListData();
-//   }
-// }
+}
 
 function updateFeatureBtns(data) {
   const allCompleted = (data.length > 0 && data.every(todo => todo.completed)) || data.length === 0;
@@ -180,37 +205,35 @@ function updateFeatureBtns(data) {
   }
 }
 
-// sortTasksBtn.addEventListener('click', (e) => {
-//   e.stopPropagation();
-//   sortDropdown.classList.toggle('hidden');
-// });
+function updateSortOptions(currentSort) {
+  sortSelect.innerHTML = '';
+  const allOptions = [
+    { value: 'newest', label: 'Newest' },
+    { value: 'oldest', label: 'Oldest' },
+    { value: 'pending', label: 'Pending' }
+  ];
 
-// document.addEventListener('click', () => {
-//   sortDropdown.classList.add('hidden');
-// });
+  // Static 'Sort by' placeholder
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = 'Sort by';
+  placeholder.disabled = true;
+  placeholder.selected = true;
+  placeholder.hidden = true;
+  sortSelect.appendChild(placeholder);
 
-// document.querySelectorAll('.sort-option').forEach(option => {
-//   option.addEventListener('click', (e) => {
-//     const sortBy = e.target.dataset.sort;
-//     localStorage.setItem('sortBy', sortBy);
-//     sortDropdown.classList.add('hidden');
-//     updateActiveSortOption(sortBy);
-//     loadListData(sortBy);
-//   });
-// });
-
-// function updateActiveSortOption(sortBy) {
-//   document.querySelectorAll('.sort-option').forEach(option => {
-//     if (option.dataset.sort === sortBy) {
-//       option.classList.add('sort-option-active');
-//     } else {
-//       option.classList.remove('sort-option-active');
-//     }
-//   });
-// }
+  // All 3 options
+  allOptions.forEach(option => {
+    const optionElement = document.createElement('option');
+    optionElement.value = option.value;
+    optionElement.textContent = option.label;
+    sortSelect.appendChild(optionElement);
+  });
+}
 
 sortSelect.addEventListener('change', () => {
   const sortBy = sortSelect.value;
   localStorage.setItem('sortBy', sortBy);
+  updateSortOptions(sortBy);
   loadListData(sortBy);
 });

@@ -64,19 +64,21 @@
 }
 
 /* .sort-tasks {
-    @apply w-full md:w-auto justify-center items-center border-2 border-orange border-solid py-4 px-6 text-[18px] text-orange cursor-pointer rounded-md hover:text-black hover:bg-orange transition duration-300;
-}
-
-.sort-option-active {
-  @apply bg-orange text-black;
+  @apply w-full md:w-auto border-2 border-orange border-solid py-4 px-6 text-[18px] text-orange cursor-pointer rounded-md bg-black transition duration-300 hover:text-black hover:bg-orange appearance-none;
 } */
 
 .sort-tasks {
-  @apply w-full md:w-auto border-2 border-orange border-solid py-4 px-6 text-[18px] text-orange cursor-pointer rounded-md bg-black transition duration-300 hover:text-black hover:bg-orange;
+  @apply w-full md:w-auto border-2 border-orange border-solid py-4 px-6 text-[18px] 
+         text-orange cursor-pointer rounded-md bg-black transition duration-300
+         hover:text-black hover:bg-orange focus:outline-none focus:ring-orange appearance-none;
 }
 
 .task-list-item-title {
-    @apply text-orange text-[22px] cursor-pointer w-full;
+    @apply text-orange text-[22px] w-full;
+}
+
+.task-list-item-title-input {
+    @apply bg-transparent border-b-2 border-orange text-orange text-[22px] w-full focus:outline-none;
 }
 
 .task-list-item-checkbox {

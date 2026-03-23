@@ -3,6 +3,7 @@ package com.taskzen.demo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/todos")
@@ -28,14 +29,15 @@ public class TodoController {
         return ResponseEntity.status(201).body(saved);
     }
 
-    // DELETE a todo
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
-        if (!todoRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        todoRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+    @PatchMapping("/{id}")
+    public ResponseEntity<Todo> updateTitle(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        return todoRepository.findById(id).map(todo -> {
+            String newTitle = body.get("title");
+            if (newTitle != null && !newTitle.isBlank()) {
+                todo.setTitle(newTitle.trim());
+            }
+            return ResponseEntity.ok(todoRepository.save(todo));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     // PATCH toggle status
@@ -45,6 +47,16 @@ public class TodoController {
             todo.setCompleted(!todo.isCompleted());
             return ResponseEntity.ok(todoRepository.save(todo));
         }).orElse(ResponseEntity.notFound().build());
+    }
+
+    // DELETE a todo
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
+        if (!todoRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        todoRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     // Mark all tasks as complete
