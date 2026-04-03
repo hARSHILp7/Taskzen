@@ -7,6 +7,10 @@
 ## 📚 Table of Contents
 
 - [Project Overview](#project-overview)
+- [Tech Stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Project Setup](#project-setup)
+- [Running the Project](#running-the-project)
 - [Module Structure](#module-structure)
 - [The 12 Phases](#the-12-phases)
 - [Module 1: Core Todo (CRUD)](#module-1-core-todo-crud)
@@ -28,6 +32,206 @@
 ## Project Overview
 
 A full-stack Todo application built from scratch as a structured learning project. Every feature is developed module by module, each following the same 12-phase engineering discipline — from requirements through deployment.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | HTML, CSS, JavaScript |
+| Build Tool | Vite |
+| CSS Framework | Tailwind CSS |
+| Icons | Font Awesome |
+| Font | Inter (Google Fonts) |
+| Backend | Java, Spring Boot |
+| ORM | Spring Data JPA + Hibernate |
+| Database | PostgreSQL |
+| Build Tool | Maven |
+
+---
+
+## Prerequisites
+
+Make sure the following are installed on your system before running the project.
+
+### 1. Java 21
+Check if installed:
+```bash
+java -version
+```
+If not installed, download from [adoptium.net](https://adoptium.net) and install Java 21 (LTS).
+
+### 2. Node.js (v18 or higher)
+Check if installed:
+```bash
+node -v
+npm -v
+```
+If not installed, download from [nodejs.org](https://nodejs.org) (LTS version).
+
+### 3. PostgreSQL (v15 or higher)
+Check if installed:
+```bash
+psql --version
+```
+If not installed, download from [postgresql.org/download](https://www.postgresql.org/download) and install it. During installation:
+- Set a password for the `postgres` user — **write this down**
+- Keep the default port `5432`
+
+### 4. Git
+Check if installed:
+```bash
+git --version
+```
+If not installed, download from [git-scm.com](https://git-scm.com).
+
+---
+
+## Project Setup
+
+### Step 1 — Clone the repository
+```bash
+git clone <your-repo-url>
+cd Taskzen
+```
+
+### Step 2 — Create the database
+Connect to PostgreSQL:
+
+**Windows:**
+```bash
+& "C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres
+```
+
+**Mac / Linux:**
+```bash
+psql -U postgres
+```
+
+Then create the database:
+```sql
+CREATE DATABASE taskzen;
+\q
+```
+
+### Step 3 — Configure the database connection
+Open `src/main/resources/application.properties` and update with your credentials:
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/taskzen
+spring.datasource.username=postgres
+spring.datasource.password=YOUR_POSTGRES_PASSWORD
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
+Replace `YOUR_POSTGRES_PASSWORD` with the password you set during PostgreSQL installation.
+
+### Step 4 — Install frontend dependencies
+```bash
+cd frontend
+npm install
+```
+
+---
+
+## Running the Project
+
+You need **two terminals** running at the same time.
+
+### Terminal 1 — Start the backend (Spring Boot)
+
+Navigate to the project root:
+
+**Windows:**
+```bash
+cd Taskzen
+.\mvnw.cmd spring-boot:run
+```
+
+**Mac / Linux:**
+```bash
+cd Taskzen
+./mvnw spring-boot:run
+```
+
+Wait until you see:
+```
+Started TaskzenApplication in X seconds
+```
+
+Spring Boot runs on `http://localhost:8080`
+
+### Terminal 2 — Start the frontend (Vite)
+
+```bash
+cd Taskzen/frontend
+npm run dev
+```
+
+Vite runs on `http://localhost:5173`
+
+### Open the app
+Visit `http://localhost:5173` in your browser.
+
+> **Note:** The frontend at `5173` automatically proxies all `/api/...` calls to Spring Boot at `8080` via `vite.config.js` — no CORS issues during development.
+
+---
+
+## Building for Production
+
+To build the frontend and serve everything from Spring Boot on a single port:
+
+```bash
+cd frontend
+npm run build
+```
+
+This compiles the frontend and drops the output into `src/main/resources/static/`. Then run Spring Boot and visit `http://localhost:8080`.
+
+---
+
+## Project Structure
+
+```
+Taskzen/
+├── frontend/                          ← Vite frontend
+│   ├── src/
+│   │   ├── main.js                    ← JavaScript entry point
+│   │   └── style.css                  ← Tailwind CSS styles
+│   ├── index.html                     ← Main HTML file
+│   ├── vite.config.js                 ← Vite config + API proxy
+│   └── package.json
+│
+├── src/                               ← Spring Boot backend
+│   └── main/
+│       ├── java/com/taskzen/demo/
+│       │   ├── TaskzenApplication.java
+│       │   ├── TodoController.java
+│       │   ├── TodoRepository.java
+│       │   ├── Todo.java
+│       │   └── DateTimeController.java
+│       └── resources/
+│           ├── application.properties ← DB config
+│           └── static/                ← Production build output (auto-generated)
+│
+├── specifications/                    ← User story specs
+├── pom.xml                            ← Maven dependencies
+└── README.md
+```
+
+---
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/todos?sort=newest` | Get all todos (sorted) |
+| `POST` | `/api/todos` | Create a new todo |
+| `DELETE` | `/api/todos/{id}` | Delete a todo |
+| `PATCH` | `/api/todos/{id}/toggle` | Toggle todo status |
+| `PATCH` | `/api/todos/complete-all` | Mark all todos complete |
+| `DELETE` | `/api/todos/delete-all` | Delete all todos |
+| `GET` | `/api/datetime` | Get current day, date and time |
 
 ---
 

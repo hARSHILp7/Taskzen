@@ -4,12 +4,55 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Todo App</title>
-  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/src/style.css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
-  <div class="hero">
-    <h1>Hello World</h1>
+  <div id="app-container" class="app-container">
+    <!-- Today's Info -->
+    <div id="today-info" class="today-info">
+      <div id="day" class="today-day"></div>
+      <div id="date-time" class="today-date-time"></div>
+    </div>
+
+    <!-- Add Task -->
+    <div id="add-task" class="add-task">
+      <div class="relative w-full md:w-1/4">
+        <input type="text" id="add-task-input" placeholder=" " autocomplete="off" maxlength="40" 
+        class="w-full pt-7 pb-3 px-5 text-customOrange text-[20px] border-2 border-solid border-customcustomOrange 
+        bg-transparent font-medium rounded-md transition-all duration-300 peer focus:outline-none"/>
+        <label for="add-task-input"
+        class="absolute left-5 top-1/2 -translate-y-1/2 text-customOrange text-[20px] cursor-text transition-all duration-300 
+        peer-focus:top-1 peer-focus:translate-y-0 peer-focus:text-xs peer-hover:top-1 peer-hover:translate-y-0 
+        peer-hover:text-xs peer-[:not(:placeholder-shown)]:top-1 peer-[:not(:placeholder-shown)]:translate-y-0 
+        peer-[:not(:placeholder-shown)]:text-xs">
+          Enter task here
+        </label>
+      </div>
+      <button onclick="addTask()" id="add-task-btn" class="w-full md:w-auto border-2 border-customOrange border-solid pt-4 pb-4 pl-6 pr-6 text-[24px] text-customOrange cursor-pointer rounded-md hover:text-black hover:bg-customOrange transition duration-300">
+        Add Task
+      </button>
+    </div>
+
+    <!-- Task List -->
+    <div id="task-list" class="task-list">
+      <div id="task-list-feature" class="task-list-feature">
+        <button onclick="markAllComplete()" id="mark-all-complete" class="mark-all-complete">Mark all complete</button>
+        <button onclick="deleteAll()" id="delete-all" class="delete-all">Delete all</button>
+        <div class="relative">
+          <select id="sort-tasks" class="sort-tasks"></select>
+        </div>
+      </div>
+      <ol id="task-list-ordered" class="task-list-ordered">
+      </ol>
+    </div>
   </div>
-  <script src="/js/app.js"></script>
+  <script src="/src/main.js"></script>
 </body>
 </html>
